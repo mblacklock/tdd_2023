@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
@@ -10,7 +10,7 @@ import time
 
 MAX_WAIT = 10 
 
-class NewVisitorTest(LiveServerTestCase):  
+class NewVisitorTest(StaticLiveServerTestCase):  
 
     def setUp(self):  
         self.browser = webdriver.Edge(service=EdgeService(executable_path="F:/django-apps/tdd/"))
@@ -23,7 +23,7 @@ class NewVisitorTest(LiveServerTestCase):
         while True:  
             try:
                 table = self.browser.find_element(By.ID, 'id_list_table')
-                rows = table.find_elements(By.TAG_NAME, 'tr')
+                rows = table.find_elements(By.TAG_NAME, 'li')
                 self.assertIn(row_text, [row.text for row in rows])
                 return
             except (AssertionError, WebDriverException) as e:
