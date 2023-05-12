@@ -27,11 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 #ALLOWED_HOSTS = ['*']
 
-# Proper security setup
-if os.getenv['DJANGO_DEBUG_FALSE']:  
+##### TURN ON SECURITY FOR PRODUCTION #####
+from dotenv import load_dotenv
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+if 'DJANGO_DEBUG_FALSE' in os.environ:  
     DEBUG = False
-    SECRET_KEY = os.getenv['DJANGO_SECRET_KEY']  
-    ALLOWED_HOSTS = [os.getenv['SITENAME']]  
+    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']  
+    ALLOWED_HOSTS = [os.environ['SITENAME']]  
 else:
     DEBUG = True  
     SECRET_KEY = 'insecure-key-for-dev'
